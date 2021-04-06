@@ -59,6 +59,9 @@ void _debug(string s, string x) {
 void _debug(string s, char x) {
     cerr << s << ": " << x << endl;
 }
+void _debug(string s, size_t x) {
+    cerr << s << ": " << x << endl;
+}
 
 #define debug(x) _debug(#x, (x))
 #else
