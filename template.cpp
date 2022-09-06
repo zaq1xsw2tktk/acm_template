@@ -48,6 +48,11 @@ void _debug(string s, vector<pair<T, K> > x) {
     }
     cerr << endl;
 }
+
+template<typename T, typename K>
+void _debug(string s, pair<T, K> x) {
+    cerr << s << ": " << x.first << "," << x.second << endl;
+}
  
 void _debug(string s, int x) {
     cerr << s << ": " << x << endl;
@@ -71,18 +76,30 @@ void _debug(string s, bool x) {
     cerr << s << ": " << x << endl;
 }
  
- 
 #define debug(x) _debug(#x, (x))
 #else
 #define debug(x)
 #endif
  
 #define db debug
- 
+
+template <class T>
+void print(vector<T> &v) {
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i];
+        if (i == v.size() - 1) {
+            cout << endl;
+        } else {
+            cout << " ";
+        }
+    }
+}
+
 void solve();
  
 void pre_init();
- 
+
+
 int main() {
     ios_base::sync_with_stdio(false); std::cin.tie(0);
     pre_init();
