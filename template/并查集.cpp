@@ -1,4 +1,4 @@
-const int N = 100005;
+const int N = 200005;
 int p[N];
 int fnode(int x) {return p[x] == x ? x : (p[x] = fnode(p[x]));}
 void connect(int x, int y) {p[fnode(x)] = fnode(y);}
