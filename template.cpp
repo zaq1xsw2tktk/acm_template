@@ -65,6 +65,15 @@ void _debug(string s, vector<pair<T, K> > x) {
 }
 
 template<typename T, typename K>
+void _debug(string s, set<pair<T, K> > x) {
+    cerr << s << ":";
+    for (auto it = x.begin(); it != x.end(); ++it) {
+        cerr << " " << it->first << "," << it->second;
+    }
+    cerr << endl;
+}
+
+template<typename T, typename K>
 void _debug(string s, pair<T, K> x) {
     cerr << s << ": " << x.first << "," << x.second << endl;
 }
@@ -114,6 +123,8 @@ void solve();
  
 void pre_init();
 
+
+
 int main() {
     ios_base::sync_with_stdio(false); std::cin.tie(0);
     pre_init();
@@ -124,9 +135,8 @@ int main() {
     }
     cerr<<"Time:"<<1000*((double)clock())/(double)CLOCKS_PER_SEC<<"ms\n"; 
 }
- 
+
 void pre_init() {}
 
 void solve() {
-
 }

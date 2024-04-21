@@ -3,8 +3,8 @@ template<long long mod>
 class MINT {
 public:
     long long x;
-    MINT(const int & x) {this->x = x; }
-    MINT(const long long & x) {this->x = x; }
+    MINT(const int & x) {this->x = x; norm();}
+    MINT(const long long & x) {this->x = x; norm();}
     MINT() {this->x = 0;}
     constexpr long long val() {return x;}
     void norm() { x %= mod; x+= mod; x %= mod;}
@@ -78,4 +78,32 @@ mint get_c(long long m, long long n) {
     if (n < 0 || n > m) return 0;
     if (m < 255) return c[m][n];
     return jc[m] * jc_1[n] * jc_1[m - n];
+}
+
+vector<int> primes;
+void init_primes(int n = 10000000) {
+    vector<int> isprimes(n, 1);
+    primes.clear();
+    isprimes[0] = isprimes[1] = 0;
+    for (ll i = 2; i < n; i++) {
+        if (!isprimes[i]) continue;
+        primes.push_back(i);
+        for (ll j = i * i; j < n; j += i) {
+            isprimes[j] = 0;
+        }
+    }
+}
+
+vector<int> mobius;
+void init_mobius(int n = 10000000) {
+    mobius.resize(n, 1);
+    for (int i = 0; i < primes.size(); i++) {
+        for (int j = primes[i]; j < n; j += primes[i]) {
+            if (j /  primes[i] % primes[i] == 0) {
+                mobius[j] = 0;
+            } else {
+                mobius[j] *= -1;
+            }
+        }
+    }
 }

@@ -156,14 +156,14 @@ class SegTreeLazyRangeAdd {
     }
   }
 
-  T range_min(int l, int r, int cl, int cr, int p) {
+  T range_max(int l, int r, int cl, int cr, int p) {
     if (l <= cl && cr <= r) return tree[p];
     int m = cl + (cr - cl) / 2;
-    T min_val = 2e18;
+    T max_val = -2e18;
     maintain(cl, cr, p);
-    if (l <= m) min_val = std::min(min_val, range_min(l, r, cl, m, p * 2));
-    if (r > m) min_val = std::min(min_val, range_min(l, r, m + 1, cr, p * 2 + 1));
-    return min_val;
+    if (l <= m) max_val = std::max(max_val, range_max(l, r, cl, m, p * 2));
+    if (r > m) max_val = std::max(max_val, range_max(l, r, m + 1, cr, p * 2 + 1));
+    return max_val;
   }
 
   void range_add(int l, int r, T val, int cl, int cr, int p) {
@@ -176,7 +176,7 @@ class SegTreeLazyRangeAdd {
     maintain(cl, cr, p);
     if (l <= m) range_add(l, r, val, cl, m, p * 2);
     if (r > m) range_add(l, r, val, m + 1, cr, p * 2 + 1);
-    tree[p] = std::min(tree[p * 2], tree[p * 2 + 1]);
+    tree[p] = std::max(tree[p * 2], tree[p * 2 + 1]);
   }
 
   void build(int s, int t, int p) {
@@ -187,7 +187,7 @@ class SegTreeLazyRangeAdd {
     int m = s + (t - s) / 2;
     build(s, m, p * 2);
     build(m + 1, t, p * 2 + 1);
-    tree[p] = min(tree[p * 2], tree[p * 2 + 1]);
+    tree[p] = max(tree[p * 2], tree[p * 2 + 1]);
   }
 
  public:
@@ -204,7 +204,7 @@ class SegTreeLazyRangeAdd {
   }
 
   void upd(int l, T val) {
-    T need_add_val = val - range_min(l, l);
+    T need_add_val = val - range_max(l, l);
     range_add(l, l, need_add_val);
   }
 
@@ -216,7 +216,19 @@ class SegTreeLazyRangeAdd {
     show(p * 2 + 1, depth + 1);
   }
 
-  T range_min(int l, int r) { return range_min(l, r, 0, end, root); }
+  void show() {
+    for (int i = 0; i < n; i++) {
+        cerr << range_max(i, i) << (i == n - 1 ? "\n" : " ");
+    }
+  }
+
+  T range_max(int l, int r) { return range_max(l, r, 0, end, root); }
 
   void range_add(int l, int r, T val) { range_add(l, r, val, 0, end, root); }
 };
+
+template<class T>
+void _debug(string s, SegTreeLazyRangeAdd<T> &x) {
+    cerr << s << ": ";
+    x.show();
+}
